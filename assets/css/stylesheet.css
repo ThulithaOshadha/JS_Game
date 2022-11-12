@@ -1,0 +1,15 @@
+#myCardBox{
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    bottom: 10px;
+    left: 30px;
+    width: 95%;
+    height: 25%;
+    border: 1px solid red;
+}
+#myCardBox>div{
+    width: 250px;
+    height: 100%;
+    border: 1px solid red;
+}

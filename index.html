@@ -7,5 +7,58 @@
 </head>
 <body>
 
+<div id="myCardBox">
+    <!--<div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>-->
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<script>
+
+    var myHand=[];
+    var card={
+        cards:[
+            {name:'H_A',typeValue:1,value:8,image:"assets/cards/H_A.png"},
+            {name:'H_K',typeValue:1,value:8,image:"assets/cards/H_K.png"},
+            {name:'R_A',typeValue:1,value:8,image:"assets/cards/R_A.png"},
+            {name:'S_A',typeValue:1,value:8,image:"assets/cards/S_A.png"},
+            {name:'S_10',typeValue:1,value:8,image:"assets/cards/S_10.png"}
+        ],
+        nextCard:function (index){
+            let selectedCard=this.cards.splice(index,1);
+        }
+    }
+
+    function shuffleCard(){
+        for (let i = 0; i <4; i++) {
+            var x=Math.floor(Math.random()*card.cards.length);
+            myHand.push({name:card.cards[x].name,image:card.cards[x].image});
+            card.nextCard(x);
+        }
+        my1stHandProcess()
+    }
+    shuffleCard();
+    function my1stHandProcess(){
+        var count=0;
+        if (!count<=4){
+            for (let j = 0; j < myHand.length; j++) {
+                $("#myCardBox").append(`<div id="${myHand[j].name}" style="background-image: ${myHand[j].image}"><h1>${myHand[j].name}</h1></div>`);
+                count++;
+            }
+        }
+    }
+
+
+    console.log(myHand);
+    console.log(card.cards);
+
+</script>
 </body>
 </html>
