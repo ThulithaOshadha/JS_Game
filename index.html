@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>JS_Game</title>
     <link rel="stylesheet" href="assets/css/stylesheet.css">
+    <link rel="stylesheet" href="assets/lib/jquery-ui.min.css">
 </head>
 <body>
 
@@ -16,10 +17,19 @@
     <div></div>
     <div></div>
     <div></div>-->
+</div>
 
+<div id="trumpSelectingBox">
+    <ol id="selectable">
+        <li id="trumpHeart" class="ui-widget-content">Heart</li>
+        <li id="trumpDiamonds" class="ui-widget-content">Diamonds</li>
+        <li id="trumpClubs" class="ui-widget-content">Clubs</li>
+        <li id="trumpSpades" class="ui-widget-content">Spades</li>
+    </ol>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<script src="assets/lib/jquery-ui.min.js"></script>
 <script>
 
     var myHand=[];
@@ -45,19 +55,40 @@
         my1stHandProcess()
     }
     shuffleCard();
+
+    var trump=[];
+    //var trumps=[];
     function my1stHandProcess(){
         var count=0;
         if (!count<=4){
             for (let j = 0; j < myHand.length; j++) {
-                $("#myCardBox").append(`<div id="${myHand[j].name}" style="background-image: ${myHand[j].image}"><h1>${myHand[j].name}</h1></div>`);
+                $("#myCardBox").append(`<div id="${myHand[j].name}"><img src="${myHand[j].image}" alt="cards"></div>`);
                 count++;
             }
         }
     }
 
+    //selectingTrump();
+
+    $( "#selectable" ).selectable({
+            selected: function( event, ui ) {
+                trump.push($(ui.selected).attr('id'));
+                console.log(trump);
+                secondRound();
+            }
+    });
+
+    function secondRound(){
+
+    }
+
+
+
 
     console.log(myHand);
     console.log(card.cards);
+    console.log(trump);
+
 
 </script>
 </body>
