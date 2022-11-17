@@ -26,6 +26,11 @@
     <div></div>-->
 </div>
 
+<div id="trumpCalcBox">
+    <div id="ourTrumpCalc"></div>
+    <div id="otherTrumpCalc" ></div>
+</div>
+
 <div id="trumpSelectingBox">
     <ol id="selectable">
         <li id="trumpHeart" class="ui-widget-content">Heart</li>
@@ -149,7 +154,10 @@
     var cardTypeVal;
     var cardImg;
     var cardValue;
-    var cardID
+    var cardID;
+
+    var ourWinerHand=0;
+    var otherWinnerHand=0;
     //var bestPlayer;
 
 
@@ -159,6 +167,7 @@
             selected: function( event, div ) {
                 cardID = ($(div.selected).attr('id'));
                 cardsRound1(cardID);
+                console.log('card id '+cardID);
 
             }
         });
@@ -187,6 +196,7 @@
                 cardImg=myHand[i].image;
                 cardTypeVal=myHand[i].typeValue;
                 cardValue=myHand[i].value;
+                $("#myPosition").empty();
                 $("#myPosition").append(`<img src="${cardImg}" alt="cards">`);
                 turnArray.push({player:1,typeValue:cardTypeVal,value:cardValue});
 
@@ -248,6 +258,19 @@
         console.log('largeVal '+largeVal);
         console.log('largPlayer '+largPlayer);
 
+        console.log(card.cards);
+        console.log(trump);
+
+        console.log('---------------');
+        console.log(myHand);
+        console.log(playerOne);
+        console.log(myPlayer);
+        console.log(playerTwo);
+        //console.log(card.cards);
+        console.log('turn array');
+
+        console.log(turnArray);
+
 
         //select largest value from turnArray
 
@@ -266,9 +289,11 @@
         console.log(count);
         console.log(bestPlayer);
 
+        turnArray=[];
+        console.log('new turn');
+        console.log(turnArray);
         startFromBestPlayer(bestPlayer);
 
-        console.log(Math.max(turnArray));
     }
 
     //$( "#trumpSelectingBox" ).draggable();
@@ -293,21 +318,61 @@
         return tVal;
     }
     console.log('best player '+bestPlayer);
+    console.log(turnArray);
+
+
+
+
 
     function startFromBestPlayer(bestPlayer){
+        //turnArray=[];
+
         if (bestPlayer==1){
+            ourWinerHand++;
+            console.log('our otherWinnerHand '+ourWinerHand);
+            $("#ourTrumpCalc").empty();
+            $("#ourTrumpCalc").append(`<h1 style="color: #003eff">${ourWinerHand}</h1>`);
             console.log('empty');
             clearCardsPositions();
             alert('hi second round');
             cd();
         }
+        else {
+            otherWinnerHand++
+            $("#otherTrumpCalc").empty();
+            $("#otherTrumpCalc").append(`<h1 style="color: #003eff">${otherWinnerHand}</h1>`);
+        }
     }
+
+
+
+
+
+    /*function setHand(bestPlayer) {
+        switch (bestPlayer){
+            case 1:
+                ourWinerHand++;
+                break;
+            case 2:
+               otherWinnerHand++;
+                break;
+            case 3:
+                ourWinerHand++;
+                break;
+            case 4:
+                otherWinnerHand++;
+                break;
+        }
+        return ourWinerHand;
+
+
+    }*/
 
     function clearCardsPositions(){
-        $('#myPosition').empty();
-        $('#myPlayerPosition').empty();
-        $('#playerOnePosition').empty();
-        $('#playerTwoPosition').empty();
+        $('#myPosition').append('<img style="display: none">');
+        $('#myPlayerPosition').append('<img style="display: none">');
+        $('#playerOnePosition').append('<img style="display: none">');
+        $('#playerTwoPosition').append('<img style="display: none">');
     }
 
 
@@ -317,18 +382,7 @@
 
 
 
-    console.log(card.cards);
-    console.log(trump);
 
-    console.log('---------------');
-    console.log(myHand);
-    console.log(playerOne);
-    console.log(myPlayer);
-    console.log(playerTwo);
-    //console.log(card.cards);
-    console.log('turn array');
-
-    console.log(turnArray);
 
 
 </script>
