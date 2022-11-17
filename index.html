@@ -149,15 +149,23 @@
     var cardTypeVal;
     var cardImg;
     var cardValue;
-    $( "#myCardBox" ).selectable({
-        selected: function( event, div ) {
-            var cardID = ($(div.selected).attr('id'));
-            cardsRound1();
+    var cardID
+    //var bestPlayer;
 
-        }
-    });
 
-    function setTrumpToMyPlayer(){
+
+    function cd(){
+        $( "#myCardBox" ).selectable({
+            selected: function( event, div ) {
+                cardID = ($(div.selected).attr('id'));
+                cardsRound1(cardID);
+
+            }
+        });
+    }
+
+    cd();
+    /*function setTrumpToMyPlayer(){
         for (let i = 0; i < myPlayer.length; i++) {
             $("#playerOnePosition").empty();
             $("#playerOnePosition").append(`<img src="${playerOne[i].image}" alt="cards">`);
@@ -165,9 +173,9 @@
             break;
         }
 
-    }
+    }*/
 
-    function cardsRound1(){
+    function cardsRound1(cardID){
 
         //var cardImg;
         //var cardTypeVal;
@@ -257,6 +265,9 @@
         console.log('final');
         console.log(count);
         console.log(bestPlayer);
+
+        startFromBestPlayer(bestPlayer);
+
         console.log(Math.max(turnArray));
     }
 
@@ -281,6 +292,25 @@
         }
         return tVal;
     }
+    console.log('best player '+bestPlayer);
+
+    function startFromBestPlayer(bestPlayer){
+        if (bestPlayer==1){
+            console.log('empty');
+            clearCardsPositions();
+            alert('hi second round');
+            cd();
+        }
+    }
+
+    function clearCardsPositions(){
+        $('#myPosition').empty();
+        $('#myPlayerPosition').empty();
+        $('#playerOnePosition').empty();
+        $('#playerTwoPosition').empty();
+    }
+
+
 
 
 
