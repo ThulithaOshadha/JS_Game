@@ -231,7 +231,7 @@
             }*!/
         }*/
 
-        myPlayerRound(cardID);
+        myOtherPlayerRound(cardID);
         /*for (let i = 0; i < myPlayer.length; i++) {
             if (myPlayer[i].typeValue==cardTypeVal){
                 $("#myPlayerPosition").empty();
@@ -249,7 +249,9 @@
 
             }
         }*/
-        for (let i = 0; i < playerTwo.length; i++) {
+
+        playerTwoRound(cardID);
+        /*for (let i = 0; i < playerTwo.length; i++) {
             if (playerTwo[i].typeValue==cardTypeVal){
                 $("#playerTwoPosition").empty();
                 $("#playerTwoPosition").append(`<img src="${playerTwo[i].image}" alt="cards">`);
@@ -267,7 +269,7 @@
                 //break;
 
             }
-        }
+        }*/
 
 
 
@@ -329,6 +331,27 @@
 
         }
     }
+    function playerTwoRound(cardID){
+        for (let i = 0; i < playerTwo.length; i++) {
+            if (playerTwo[i].typeValue==cardTypeVal){
+                $("#playerTwoPosition").empty();
+                $("#playerTwoPosition").append(`<img src="${playerTwo[i].image}" alt="cards">`);
+                playerTwo.splice(i,1);
+                turnArray.push({player:4,typeValue:playerTwo[i].typeValue,value:playerTwo[i].value});
+                break;
+
+
+            }else if (playerTwo[i].typeValue==value1 && playerTwo[i].typeValue!=cardTypeVal) {
+
+                $("#playerTwoPosition").empty();
+                $("#playerTwoPosition").append(`<img src="${playerTwo[i].image}" alt="cards">`);
+                playerTwo.splice(i,1);
+                turnArray.push({player: 4, typeValue: playerTwo[i].typeValue, value: playerTwo[i].value});
+                //break;
+
+            }
+        }
+    }
 
 
 
@@ -355,7 +378,7 @@
         }
     }
 
-    function myPlayerRound(cardID){
+    function myOtherPlayerRound(cardID){
         for (let i = 0; i < myPlayer.length; i++) {
             if (myPlayer[i].typeValue==cardTypeVal){
                 $("#myPlayerPosition").empty();
