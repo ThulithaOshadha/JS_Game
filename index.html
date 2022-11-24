@@ -151,10 +151,18 @@
 
     }
 
+    console.log('-----1st----------');
+    console.log(myHand);
+    console.log(playerOne);
+    console.log(myPlayer);
+    console.log(playerTwo);
+
     var cardTypeVal;
     var cardImg;
     var cardValue;
     var cardID;
+    var myBoxIm;
+    var ind;
 
     var ourWinerHand=0;
     var otherWinnerHand=0;
@@ -162,18 +170,32 @@
 
 
 
-    function cd(){
-        $( "#myCardBox" ).selectable({
+
+
+
+     $("#myCardBox" ).selectable({
             selected: function( event, div ) {
                 cardID = ($(div.selected).attr('id'));
-                cardsRound1(cardID);
-                console.log('card id '+cardID);
+                for (let i = 0; i < myHand.length; i++) {
+                    if (cardID==myHand[i].name){
+                        cardTypeVal=myHand[i].typeValue;
+                        cardValue=myHand[i].value;
+                        myBoxIm=myHand[i].image;
+                        ind = i;
+                        break;
+                        console.log('card id ');
+                        console.log(ind);
+                        console.log('card id '+cardTypeVal);
+                    }
+                }
+                myPlayerRound(cardTypeVal,cardValue,myBoxIm,ind)
+                cardsRound1(cardTypeVal);
 
             }
-        });
-    }
+    });
 
-    cd();
+
+
     /*function setTrumpToMyPlayer(){
         for (let i = 0; i < myPlayer.length; i++) {
             $("#playerOnePosition").empty();
@@ -192,7 +214,15 @@
         console.log(cardID);
         //console.log('my player - '+myPlayer);
         /////
-        myPlayerRound(cardID);
+        //myPlayerRound(cardID,myBoxIM,ind);
+        playerOneRound(cardID);
+        myOtherPlayerRound(cardID);
+        playerTwoRound(cardID);
+
+        /*$("#myPosition").empty();
+        $("#myPosition").append(`<img src="${myBoxIM}" alt="cards">`);
+        turnArray.push({player:1,typeValue:cardTypeVal,value:cardValue});
+        myHand.splice(ind,1);*/
         /*for (let i = 0; i < myHand.length; i++) {
             if (myHand[i].name==cardID){
                 cardImg=myHand[i].image;
@@ -209,54 +239,54 @@
         console.log(cardTypeVal);
         var largeVal=0;
         var largPlayer=1;
-        playerOneRound(cardID);
+
         /*for (let i = 0; i < playerOne.length; i++) {
             if (playerOne[i].typeValue==cardTypeVal) {
                 $("#playerOnePosition").empty();
                 $("#playerOnePosition").append(`<img src="${playerOne[i].image}" alt="cards">`);
-                playerOne.splice(i,1);
                 turnArray.push({player: 2, typeValue: playerOne[i].typeValue, value: playerOne[i].value});
+                playerOne.splice(i,1);
                 break;
 
             }else if (playerOne[i].typeValue==value1 && playerOne[i].typeValue!=cardTypeVal) {
                 $("#playerOnePosition").empty();
                 $("#playerOnePosition").append(`<img src="${playerOne[i].image}" alt="cards">`);
-                playerOne.splice(i,1);
                 turnArray.push({player: 4, typeValue: playerOne[i].typeValue, value: playerOne[i].value});
+                playerOne.splice(i,1);
             }/!*else if (playerOne[i].typeValue!=cardTypeVal){
                 $("#playerOnePosition").empty();
                 $("#playerOnePosition").append(`<img src="${playerOne[i].image}" alt="cards">`);
                 playerOne.splice(i,1);
                 turnArray.push({player: 4, typeValue: playerOne[i].typeValue, value: playerOne[i].value});
             }*!/
-        }*/
+        }
 
-        myOtherPlayerRound(cardID);
-        /*for (let i = 0; i < myPlayer.length; i++) {
+
+        for (let i = 0; i < myPlayer.length; i++) {
             if (myPlayer[i].typeValue==cardTypeVal){
                 $("#myPlayerPosition").empty();
                 $("#myPlayerPosition").append(`<img src="${myPlayer[i].image}" alt="cards">`);
-                myPlayer.splice(i,1);
                 turnArray.push({player:3,typeValue:myPlayer[i].typeValue,value:myPlayer[i].value});
+                myPlayer.splice(i,1);
                 break;
 
             }else if (myPlayer[i].typeValue==value1 && myPlayer[i].typeValue!=cardTypeVal) {
                 $("#myPlayerPosition").empty();
                 $("#myPlayerPosition").append(`<img src="${myPlayer[i].image}" alt="cards">`);
-                myPlayer.splice(i,1);
                 turnArray.push({player: 4, typeValue: myPlayer[i].typeValue, value: myPlayer[i].value});
+                myPlayer.splice(i,1);
                 //break;
 
             }
-        }*/
+        }
 
-        playerTwoRound(cardID);
-        /*for (let i = 0; i < playerTwo.length; i++) {
+
+        for (let i = 0; i < playerTwo.length; i++) {
             if (playerTwo[i].typeValue==cardTypeVal){
                 $("#playerTwoPosition").empty();
                 $("#playerTwoPosition").append(`<img src="${playerTwo[i].image}" alt="cards">`);
-                playerTwo.splice(i,1);
                 turnArray.push({player:4,typeValue:playerTwo[i].typeValue,value:playerTwo[i].value});
+                playerTwo.splice(i,1);
                 break;
 
 
@@ -264,8 +294,8 @@
 
                 $("#playerTwoPosition").empty();
                 $("#playerTwoPosition").append(`<img src="${playerTwo[i].image}" alt="cards">`);
-                playerTwo.splice(i,1);
                 turnArray.push({player: 4, typeValue: playerTwo[i].typeValue, value: playerTwo[i].value});
+                playerTwo.splice(i,1);
                 //break;
 
             }
@@ -299,7 +329,8 @@
         for (let i = 0; i < turnArray.length; i++) {
             if (count<turnArray[i].value){
                 count=turnArray[i].value;
-                bestPlayer=turnArray[i].player;
+                //bestPlayer=turnArray[i].player;
+                bestPlayer=2;
             }else if (turnArray[i].value<count){
                 count=count;
 
@@ -312,13 +343,32 @@
         turnArray=[];
         console.log('new turn');
         console.log(turnArray);
-        startFromBestPlayer(bestPlayer);
+        //startFromBestPlayer(bestPlayer);
 
     }
 
-    function myPlayerRound(cardID){
-        for (let i = 0; i < myHand.length; i++) {
-            if (myHand[i].name==cardID){
+    function round2(){
+        playerOneRound();
+    }
+
+    /*function findBestPlayer(){
+        for (let i = 0; i < turnArray.length; i++) {
+            if (count<turnArray[i].value){
+                count=turnArray[i].value;
+                //bestPlayer=turnArray[i].player;
+                bestPlayer=2;
+            }else if (turnArray[i].value<count){
+                count=count;
+
+            }
+        }
+    }*/
+
+
+
+    function myPlayerRound(cardTypeVal,cardValue,myBoxIm,ind){
+        /*for (let i = 0; i < myHand.length; i++) {
+            if (myHand[i].typeValue==cardID){
                 cardImg=myHand[i].image;
                 cardTypeVal=myHand[i].typeValue;
                 cardValue=myHand[i].value;
@@ -329,25 +379,33 @@
 
             }
 
+        }*/
+        for (let i = 0; i < myHand.length; i++) {
+            if (myHand[i].typeValue==cardTypeVal) {
+                $("#myPosition").empty();
+                $("#myPosition").append(`<img src="${myBoxIm}" alt="cards">`);
+                turnArray.push({player: 1, typeValue: cardTypeVal, value: cardValue});
+                myHand.splice(ind, 1);
+            }
         }
     }
-    function playerTwoRound(cardID){
+    function playerTwoRound(cardTypeVal){
         for (let i = 0; i < playerTwo.length; i++) {
             if (playerTwo[i].typeValue==cardTypeVal){
                 $("#playerTwoPosition").empty();
                 $("#playerTwoPosition").append(`<img src="${playerTwo[i].image}" alt="cards">`);
-                playerTwo.splice(i,1);
                 turnArray.push({player:4,typeValue:playerTwo[i].typeValue,value:playerTwo[i].value});
+                playerTwo.splice(i,1);
                 break;
 
 
-            }else if (playerTwo[i].typeValue==value1 && playerTwo[i].typeValue!=cardTypeVal) {
+            /*}else if (playerTwo[i].typeValue==value1 && playerTwo[i].typeValue!=cardTypeVal) {
 
                 $("#playerTwoPosition").empty();
-                $("#playerTwoPosition").append(`<img src="${playerTwo[i].image}" alt="cards">`);
+                if ($("#playerTwoPosition").append(`<img src="${playerTwo[i].image}" alt="cards">`)){};
                 playerTwo.splice(i,1);
                 turnArray.push({player: 4, typeValue: playerTwo[i].typeValue, value: playerTwo[i].value});
-                //break;
+                //break;*/
 
             }
         }
@@ -355,20 +413,20 @@
 
 
 
-    function playerOneRound(cardID){
+    function playerOneRound(cardTypeVal){
         for (let i = 0; i < playerOne.length; i++) {
             if (playerOne[i].typeValue==cardTypeVal) {
                 $("#playerOnePosition").empty();
                 $("#playerOnePosition").append(`<img src="${playerOne[i].image}" alt="cards">`);
-                playerOne.splice(i,1);
                 turnArray.push({player: 2, typeValue: playerOne[i].typeValue, value: playerOne[i].value});
+                playerOne.splice(i,1);
                 break;
 
-            }else if (playerOne[i].typeValue==value1 && playerOne[i].typeValue!=cardTypeVal) {
+            /*}else if (playerOne[i].typeValue==value1 && playerOne[i].typeValue!=cardTypeVal) {
                 $("#playerOnePosition").empty();
                 $("#playerOnePosition").append(`<img src="${playerOne[i].image}" alt="cards">`);
                 playerOne.splice(i,1);
-                turnArray.push({player: 4, typeValue: playerOne[i].typeValue, value: playerOne[i].value});
+                turnArray.push({player: 4, typeValue: playerOne[i].typeValue, value: playerOne[i].value});*/
             }/*else if (playerOne[i].typeValue!=cardTypeVal){
                 $("#playerOnePosition").empty();
                 $("#playerOnePosition").append(`<img src="${playerOne[i].image}" alt="cards">`);
@@ -378,27 +436,27 @@
         }
     }
 
-    function myOtherPlayerRound(cardID){
+    function myOtherPlayerRound(cardTypeVal){
         for (let i = 0; i < myPlayer.length; i++) {
             if (myPlayer[i].typeValue==cardTypeVal){
                 $("#myPlayerPosition").empty();
                 $("#myPlayerPosition").append(`<img src="${myPlayer[i].image}" alt="cards">`);
-                myPlayer.splice(i,1);
                 turnArray.push({player:3,typeValue:myPlayer[i].typeValue,value:myPlayer[i].value});
+                myPlayer.splice(i,1);
                 break;
 
-            }else if (myPlayer[i].typeValue==value1 && myPlayer[i].typeValue!=cardTypeVal) {
+            /*}else if (myPlayer[i].typeValue==value1 && myPlayer[i].typeValue!=cardTypeVal) {
                 $("#myPlayerPosition").empty();
                 $("#myPlayerPosition").append(`<img src="${myPlayer[i].image}" alt="cards">`);
                 myPlayer.splice(i,1);
                 turnArray.push({player: 4, typeValue: myPlayer[i].typeValue, value: myPlayer[i].value});
-                //break;
+                //break;*/
 
             }
         }
     }
 
-    //$( "#trumpSelectingBox" ).draggable();
+
     var tVal;
     function setTrumpCardValue(name){
         console.log('name');
@@ -441,7 +499,25 @@
             alert('hi second round');
             cd();
         }else if (bestPlayer==2){
-            cardTypeVal=0;
+            //clearCardsPositions();
+            console.log('iam 2 best player');
+            //cardTypeVal=0;
+            /*for (let i = 0; i < playerOne.length; i++) {
+
+                $("#playerOnePosition").append(`<img src="${playerOne[i].image}" alt="cards">`);
+                playerOne.splice(i,1);
+
+                break;
+            }*/
+            //clearCardsPositions();
+            //$("#playerOnePosition").empty();
+            $("#playerOnePosition").append(`<img src="${playerOne[1].image}" alt="cards">`);
+            cardTypeVal=playerOne[1].typeValue;
+            console.log('vard tupe neeeew val '+cardTypeVal);
+            playerTwoWinner(cardTypeVal);
+
+            playerOne.splice(1,1);
+            console.log('iam 2 best player end array');
 
         }
         else {
@@ -449,6 +525,14 @@
             $("#otherTrumpCalc").empty();
             $("#otherTrumpCalc").append(`<h1 style="color: #003eff">${otherWinnerHand}</h1>`);
         }
+    }
+
+    function playerTwoWinner(cardTypeVal){
+        myOtherPlayerRound(cardTypeVal);
+        playerTwoRound(cardTypeVal);
+        myPlayerRound(cardTypeVal);
+
+
     }
 
 
@@ -476,10 +560,10 @@
     }*/
 
     function clearCardsPositions(){
-        $('#myPosition').append('<img style="display: none">');
-        $('#myPlayerPosition').append('<img style="display: none">');
-        $('#playerOnePosition').append('<img style="display: none">');
-        $('#playerTwoPosition').append('<img style="display: none">');
+        $('#myPosition').empty();
+        $('#myPlayerPosition').empty();
+        $('#playerOnePosition').empty();
+        $('#playerTwoPosition').empty();
     }
 
 
