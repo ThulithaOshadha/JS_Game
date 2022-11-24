@@ -209,16 +209,25 @@
 
     function cardsRound1(cardID){
 
-        //var cardImg;
-        //var cardTypeVal;
-        /*var cardValue;*/
         console.log(cardID);
-        //console.log('my player - '+myPlayer);
-        /////
-        //myPlayerRound(cardID,myBoxIM,ind);
-        playerOneRound(cardID);
-        myOtherPlayerRound(cardID);
-        playerTwoRound(cardID);
+
+        setTimeout(function (){
+            playerOneRound(cardID)},
+        1000);
+
+        //playerOneRound(cardID);
+        setTimeout(function (){
+                myOtherPlayerRound(cardID)},
+            2000);
+        setTimeout(function (){
+                playerTwoRound(cardID)},
+            3000);
+
+
+
+
+        //myOtherPlayerRound(cardID);
+        //playerTwoRound(cardID);
 
         /*$("#myPosition").empty();
         $("#myPosition").append(`<img src="${myBoxIM}" alt="cards">`);
@@ -327,7 +336,12 @@
 
         var count=0;
         var bestPlayer;
-        for (let i = 0; i < turnArray.length; i++) {
+        //findBestPlayer(count,bestPlayer);
+        setTimeout(function (){
+                findBestPlayer(count,bestPlayer)},
+            4000);
+
+        /*for (let i = 0; i < turnArray.length; i++) {
             if (count<turnArray[i].value){
                 count=turnArray[i].value;
                 //bestPlayer=turnArray[i].player;
@@ -336,7 +350,7 @@
                 count=count;
 
             }
-        }
+        }*/
         console.log('final');
         console.log(count);
         console.log(bestPlayer);
@@ -352,18 +366,24 @@
         playerOneRound();
     }
 
-    /*function findBestPlayer(){
+    function findBestPlayer(count,bestPlayer){
         for (let i = 0; i < turnArray.length; i++) {
             if (count<turnArray[i].value){
                 count=turnArray[i].value;
-                //bestPlayer=turnArray[i].player;
+                bestPlayer=turnArray[i].player;
+                //startFromBestPlayer(bestPlayer);
                 bestPlayer=2;
             }else if (turnArray[i].value<count){
                 count=count;
+                ///bestPlayer=2;
+                //startFromBestPlayer(bestPlayer);
+            }else {
+                bestPlayer=3;
 
             }
         }
-    }*/
+        startFromBestPlayer(bestPlayer);
+    }
 
 
 
@@ -506,14 +526,16 @@
 
                 break;
             }*/
-            //clearCardsPositions();
+            clearCardsPositions();
             //$("#playerOnePosition").empty();
             $("#playerOnePosition").append(`<img src="${playerOne[1].image}" alt="cards">`);
             cardTypeVal=playerOne[1].typeValue;
             console.log('vard tupe neeeew val '+cardTypeVal);
             playerTwoWinner(cardTypeVal);
-
             playerOne.splice(1,1);
+            otherWinnerHand++
+            $("#otherTrumpCalc").empty();
+            $("#otherTrumpCalc").append(`<h1 style="color: #003eff">${otherWinnerHand}</h1>`);
             console.log('iam 2 best player end array');
 
         }
@@ -525,14 +547,43 @@
     }
 
     function playerTwoWinner(cardTypeVal){
-        myOtherPlayerRound(cardTypeVal);
-        playerTwoRound(cardTypeVal);
+
+        setTimeout(function (){
+                myOtherPlayerRound(cardTypeVal)},
+            1000);
+        setTimeout(function (){
+                playerTwoRound(cardTypeVal)},
+            2000);
+        setTimeout(function (){
+                myPlayingTurn(cardTypeVal)},
+            3000);
+
+        //myOtherPlayerRound(cardTypeVal);
+        //playerTwoRound(cardTypeVal);
         //myPlayerRound(cardTypeVal);
         myPlayingTurn(cardTypeVal);
         console.log('complete task');
 
 
     }
+
+    function playerTreeWinner(cardTypeVal) {
+
+        setTimeout(function () {
+                playerTwoRound(cardTypeVal)
+            },
+            1000);
+        setTimeout(function () {
+                myPlayingTurn(cardTypeVal)
+            },
+            2000);
+        setTimeout(function () {
+                playerOneRound(cardTypeVal)
+            },
+            3000);
+    }
+
+
 
     function myPlayingTurn(cardTypeVal){
         $("#myCardBox" ).selectable({
