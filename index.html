@@ -91,7 +91,7 @@
             myHand.push({name:card.cards[x].name,typeValue:card.cards[x].typeValue,value:card.cards[x].value,image:card.cards[x].image});
             card.nextCard(x);
         }
-        my1stHandProcess()
+        my1stHandProcess();
     }
     shuffleCard();
 
@@ -163,6 +163,7 @@
     var cardID;
     var myBoxIm;
     var ind;
+    var id;
 
     var ourWinerHand=0;
     var otherWinnerHand=0;
@@ -343,7 +344,7 @@
         turnArray=[];
         console.log('new turn');
         console.log(turnArray);
-        //startFromBestPlayer(bestPlayer);
+        startFromBestPlayer(bestPlayer);
 
     }
 
@@ -386,6 +387,7 @@
                 $("#myPosition").append(`<img src="${myBoxIm}" alt="cards">`);
                 turnArray.push({player: 1, typeValue: cardTypeVal, value: cardValue});
                 myHand.splice(ind, 1);
+                break;
             }
         }
     }
@@ -410,9 +412,6 @@
             }
         }
     }
-
-
-
     function playerOneRound(cardTypeVal){
         for (let i = 0; i < playerOne.length; i++) {
             if (playerOne[i].typeValue==cardTypeVal) {
@@ -435,7 +434,6 @@
             }*/
         }
     }
-
     function myOtherPlayerRound(cardTypeVal){
         for (let i = 0; i < myPlayer.length; i++) {
             if (myPlayer[i].typeValue==cardTypeVal){
@@ -455,7 +453,6 @@
             }
         }
     }
-
 
     var tVal;
     function setTrumpCardValue(name){
@@ -530,9 +527,37 @@
     function playerTwoWinner(cardTypeVal){
         myOtherPlayerRound(cardTypeVal);
         playerTwoRound(cardTypeVal);
-        myPlayerRound(cardTypeVal);
+        //myPlayerRound(cardTypeVal);
+        myPlayingTurn(cardTypeVal);
+        console.log('complete task');
 
 
+    }
+
+    function myPlayingTurn(cardTypeVal){
+        $("#myCardBox" ).selectable({
+            selected: function( event, div ) {
+                id = ($(div.selected).attr('id'));
+                for (let i = 0; i < myHand.length; i++) {
+                    if (id==myHand[i].name){
+                        //cardTypeVal=myHand[i].typeValue;
+
+                        $("#myPosition").empty();
+                        $("#myPosition").append(`<img src="${myHand[i].image}" alt="cards">`);
+                        cardValue=myHand[i].value;
+                        turnArray.push({player: 1, typeValue: cardTypeVal, value: cardValue});
+                        myHand.splice(i, 1);
+                        //myBoxIm=myHand[i].image;
+
+                        //ind = i;
+                        break;
+
+
+                    }
+                }
+
+            }
+        });
     }
 
 
